@@ -55,6 +55,7 @@ class APIConnector(LoggerMixin):
 
     def conn_send_recv(self, send_data, on_recv, on_timeout, timeout=None):
         stream = zmqstream.ZMQStream(self.sock)
+        APIConnector.log_debug("stream is %s", stream)
         loop = ioloop.IOLoop.instance()
         if timeout is None:
             timeout = self.timeout
@@ -76,7 +77,9 @@ class APIConnector(LoggerMixin):
                 self.timeout_callback = None
             stream.stop_on_recv()
             self._release()
+            ## MDP self.log_debug("MDP before msg is %s", msg)
             msg = json.loads(msg[0])
+            ## MDP self.log_debug("MDP msg is %s", msg)
             if on_recv is not None:
                 on_recv(msg)
 
@@ -84,11 +87,15 @@ class APIConnector(LoggerMixin):
         self.timeout_callback = loop.add_timeout(timeout, _on_timeout)
         stream.on_recv(_on_recv)
         self.queue.incr_outstanding(1)
+        ## MDP self.log_debug("MDP data sent is %s", send_data)
         self.sock.send(send_data)
 
     @staticmethod
     def send_recv(api_name, cmd, args=None, vargs=None, on_recv=None, on_timeout=None, on_overload=None, timeout=None):
+        ##  MDP
+        ## APIConnector.log_debug("%s: calling with cmd %s ,  args %s and vargs = %s", api_name, cmd, args, vargs)
         send_data = APIConnector.make_req(cmd, args=args, vargs=vargs)
+        ## MDP APIConnector.log_debug("data created is %s ", send_data)
         api = APIConnector._get_conn(api_name)
 
         if api.queue.mean_outstanding >= APIQueue.BUFFER_SZ:

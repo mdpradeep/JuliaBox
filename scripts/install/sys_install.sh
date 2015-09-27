@@ -4,8 +4,8 @@
 # ami-80778be8
 
 # configure docker to use either AUFS or DEVICEMAPPER
-#DOCKER_FS=AUFS
-DOCKER_FS=DEVICEMAPPER
+DOCKER_FS=AUFS
+## MDP DOCKER_FS=DEVICEMAPPER
 NUM_LOCALMAX=30
 
 function sysinstall_pystuff {

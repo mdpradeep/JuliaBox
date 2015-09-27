@@ -22,6 +22,7 @@ function build_web_engines {
         echo "Building docker image ${IMGTAG} from ${DOCKERFILE} ..."
         echo "======================================================"
         docker build -t ${IMGTAG} -f ${DOCKERFILE} ${DOCKERDIR}
+        ## MDP docker build --no-cache=true -t ${IMGTAG} -f ${DOCKERFILE} ${DOCKERDIR}
         unset IFS
     done
 }
@@ -38,6 +39,9 @@ function build_containers {
         echo "======================================================"
         echo "Building container ${IMGTAG}:${IMGVER} from ${DOCKERDIR} ..."
         echo "======================================================"
+
+	## MDPecho "building with no-cache !!!"
+       	## MDPdocker build --no-cache  -t ${IMGTAG}:${IMGVER} -f ${DOCKERDIR}/Dockerfile ${DOCKERDIR}
         docker build -t ${IMGTAG}:${IMGVER} -f ${DOCKERDIR}/Dockerfile ${DOCKERDIR}
         docker tag -f ${IMGTAG}:${IMGVER} ${IMGTAG}:latest
     done

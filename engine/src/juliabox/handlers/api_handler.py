@@ -27,7 +27,11 @@ class APIHandler(JBoxHandler):
         api_name = comps[0]
         cmd = comps[1]
         args = comps[2:]
+        ## MDP args = self.request.body
         vargs = self.request.arguments
+
+        self.log_debug("args is ::  %s", args)
+        ## self.log_debug("data passed is ::: %s", self.request.body)
 
         self.log_debug("calling service:%s. cmd:%s. nargs: %d. nvargs: %d", api_name, cmd, len(args), len(vargs))
         APIContainer.ensure_container_available(api_name)
@@ -48,6 +52,11 @@ class APIHandler(JBoxHandler):
         if 'nid' in msg:
             APIContainer.record_ping(msg['nid'])
         code = msg.get('code', 500)
+        if 'data' in msg:
+            self.log_info("data received for %s", msg['data'])
+        else:
+            self.log_info("empty data received")
+         
         if code == 200:
             start_line = tornado.httputil.ResponseStartLine('', self._status_code, self._reason)
             hdrs = tornado.httputil.HTTPHeaders(msg.get('hdrs', {}))

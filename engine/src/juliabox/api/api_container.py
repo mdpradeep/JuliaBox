@@ -24,6 +24,8 @@ class APIContainer(BaseContainer):
     CPU_LIMIT = 1024
     MEM_LIMIT = None
     EXPIRE_SECS = 0
+    VOLUMES = ['/home/juser/logs']
+    HOST_LOG_FOLDER = '/jboxengine/logs/api'
     MAX_CONTAINERS = 0
     MAX_PER_API_CONTAINERS = 0
 
@@ -44,6 +46,8 @@ class APIContainer(BaseContainer):
         APIContainer.MAX_CONTAINERS = JBoxCfg.get('api.numlocalmax')
         APIContainer.MAX_PER_API_CONTAINERS = JBoxCfg.get('api.numapilocalmax')
         APIContainer.EXPIRE_SECS = JBoxCfg.get('api.expire')
+	APIContainer.HOST_LOG_FOLDER = JBoxCfg.get('api.log_location')
+        print("The host log folder = %s", APIContainer.HOST_LOG_FOLDER)
 
     @staticmethod
     def unique_container_name(api_name):
@@ -80,6 +84,15 @@ class APIContainer(BaseContainer):
 
     @staticmethod
     def create_new(api_name):
+        print("The api_name is %s", api_name)
+        print("The volume is %s", APIContainer.VOLUMES[0])
+	vols = {
+            APIContainer.HOST_LOG_FOLDER: {
+                'bind': APIContainer.VOLUMES[0],
+                'ro': False
+            }
+        }
+
         container_name = APIContainer.unique_container_name(api_name)
         queue = APIQueue.get_queue(api_name)
         env = {
@@ -88,19 +101,23 @@ class APIContainer(BaseContainer):
             "JBAPI_CMD": queue.get_command(),
             "JBAPI_CID": container_name
         }
+        print("env ", env)
         image_name = queue.get_image_name()
         if image_name is None:
             image_name = APIContainer.DCKR_IMAGE
 
-        hostcfg = docker.utils.create_host_config(mem_limit=APIContainer.MEM_LIMIT)
+        hostcfg = docker.utils.create_host_config(binds=vols, mem_limit=APIContainer.MEM_LIMIT)
+        print("hostcfg ", hostcfg)
 
         jsonobj = APIContainer.DCKR.create_container(image_name,
                                                      detach=True,
                                                      host_config=hostcfg,
                                                      cpu_shares=APIContainer.CPU_LIMIT,
+                                                     volumes=APIContainer.VOLUMES,
                                                      environment=env,
                                                      hostname='juliabox',
                                                      name=container_name)
+        print("The jsonobj is %s", jsonobj)
         dockid = jsonobj["Id"]
         cont = APIContainer(dockid)
         APIContainer.log_info("Created " + cont.debug_str())
