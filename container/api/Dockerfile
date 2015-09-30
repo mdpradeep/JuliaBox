@@ -34,7 +34,7 @@ WORKDIR /home/juser
 ## MDP RUN /opt/julia_0.3.11/bin/julia -e "Pkg.clone(\"https://github.com/JuliaDB/DBI.jl.git\")"
 ## MDP RUN /opt/julia_0.3.11/bin/julia -e "Pkg.clone(\"DBI\")"
 RUN /opt/julia_0.3.11/bin/julia -e "Pkg.clone(\"DataFrames\")" ## required because of other dependencies !!!
-## MDP RUN /opt/julia_0.3.11/bin/julia -e "try; Pkg.installed(\"jd\"); catch; Pkg.clone(\"jd\"); end"
+## MDP RUN /opt/julia_0.3.11/bin/julia -e "try; Pkg.installed(\"test\"); catch; Pkg.clone(\"test\"); end"
 
 ## MDP RUN mkdir -p /home/juser/.julia/v0.3
 RUN ls -lrt /home/juser/.julia/v0.3
@@ -42,8 +42,8 @@ RUN ls -lrt /home/juser/.julia/v0.3
 ADD MySQL* /home/juser/MySQL
 ## RUN cp -rf /home/juser/MySQL*  /home/juser/.julia/v0.3/
 ## 
-ADD jd* /home/juser/jd
-## RUN cp -rf /home/juser/jd*  /home/juser/.julia/v0.3/
+ADD test* /home/juser/test
+## RUN cp -rf /home/juser/test*  /home/juser/.julia/v0.3/
 ## 
 ADD DBI* /home/juser/DBI
 ## RUN cp -rf /home/juser/DBI*  /home/juser/.julia/v0.3/

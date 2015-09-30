@@ -1,0 +1,10 @@
+docker rmi juliabox/juliaboxapi
+docker rmi juliabox/juliaboxapi:34
+docker rmi juliabox/juliabox:34
+docker rmi juliabox/juliabox
+docker rmi juliabox/engineapi
+docker rmi juliabox/engineinteractive
+docker rmi juliabox/enginedaemon
+docker rmi juliabox/enginebase
+docker rmi juliabox/webserver
+docker rmi julialang/julia:v0.3.11

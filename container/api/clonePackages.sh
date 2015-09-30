@@ -6,7 +6,7 @@ cp -rf /home/juser/Debug*  /home/juser/.julia/v0.3/
 cp -rf /home/juser/Dates*  /home/juser/.julia/v0.3/
 
 cp -rf /home/juser/MySQL*  /home/juser/.julia/v0.3/
-cp -rf /home/juser/jd*  /home/juser/.julia/v0.3/
+cp -rf /home/juser/test*  /home/juser/.julia/v0.3/
 cp -rf /home/juser/DBI*  /home/juser/.julia/v0.3/
 cp -rf /home/juser/Budget*  /home/juser/.julia/v0.3/
 
