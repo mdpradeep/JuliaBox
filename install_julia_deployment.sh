@@ -79,7 +79,9 @@ echo "======================================================"
 
 ## TODO make a curl call to echo server to test the API container deployment
 
-ret_val=-1 
+retVal=`curl -v --data ";jsonString=\"Hello\""  http://api.ip-10-93-140-37/test/echo/ | cat - | grep "Hello" | wc -l`
+
+echo "The retVal is :: $retVal"
 
 echo "======================================================"
 if [$ret_val != 0]; then
