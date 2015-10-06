@@ -36,7 +36,7 @@ done
 ### TODO: check for sudo, user group in /etc/passwd, /etc/hosts config
 
 ## Untar up all the required images and components in the home folder
-## tar xvf JuliaDeploymentBundle.tar
+tar xvf JuliaDeploymentBundle.tar
 
 cd JuliaDeploymentImages
 
