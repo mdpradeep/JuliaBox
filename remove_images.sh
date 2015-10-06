@@ -5,5 +5,5 @@ DOCKER_IMAGES="juliabox/juliaboxapi juliabox/juliaboxapi:34 juliabox/juliabox:34
 for dock_image in $DOCKER_IMAGES
 do
     echo "Removing docker image $dock_image"
-    ## docker rmi $dock_image
+    docker rmi -f $dock_image
 done

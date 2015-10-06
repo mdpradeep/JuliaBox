@@ -5,7 +5,6 @@
 
 ### This script is meant to be used the first time around for clean installation
 
-
 ### Perform pre-requisites check ...
 
 PRE_REQUISITE_APPS="docker supervisord supervisorctl"
@@ -34,9 +33,10 @@ do
 done
 
 
-## Untar up all the required images and components in the home folder
-tar xvf JuliaDeploymentBundle.tar
+### TODO: check for sudo, user group in /etc/passwd, /etc/hosts config
 
+## Untar up all the required images and components in the home folder
+## tar xvf JuliaDeploymentBundle.tar
 
 cd JuliaDeploymentImages
 
@@ -82,7 +82,7 @@ cd JuliaDeployment
 ret_val=$?
 
 echo "======================================================"
-echo "Started components. ..."
+echo "Started components. Check webserver/logs and engine/logs ..."
 echo "Status ${ret_val} ..."  ## Should exit if not successful !
 echo "======================================================"
 
@@ -91,10 +91,12 @@ echo "======================================================"
 echo "Validating components ..."
 echo "======================================================"
 
+echo "Waiting for components to start !"
+sleep 5
 num_containers=`docker ps -a | wc -l`
-
+echo "# of containers = $num_containers"
 echo "======================================================"
-if [$num_containers -ge 4]; then
+if [ $num_containers -ge 4 ]; then
 	echo "Validation Successful !!!"
 else
 	echo "Validation Failed !!! Please check the log files for more information"
@@ -106,14 +108,12 @@ echo "======================================================"
 echo "Validating API container ..."
 echo "======================================================"
 
-## TODO make a curl call to echo server to test the API container deployment
-
 ret_val=`curl -v --data ";jsonString=\"Hello\""  http://api.ip-10-93-140-37/test/echo/ | cat - | grep "Hello" | wc -l`
 
 echo "The ret_val is :: $ret_val"
 
 echo "======================================================"
-if [$ret_val != 0]; then
+if [ $ret_val -ne 0 ]; then
 	echo "API Deployment Successful !!!"
 else
 	echo "API Deployment Failed !!! Please check the log files for more information"
