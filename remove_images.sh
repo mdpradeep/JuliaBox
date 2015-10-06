@@ -1,10 +1,9 @@
-docker rmi juliabox/juliaboxapi
-docker rmi juliabox/juliaboxapi:34
-docker rmi juliabox/juliabox:34
-docker rmi juliabox/juliabox
-docker rmi juliabox/engineapi
-docker rmi juliabox/engineinteractive
-docker rmi juliabox/enginedaemon
-docker rmi juliabox/enginebase
-docker rmi juliabox/webserver
-docker rmi julialang/julia:v0.3.11
+#!/bin/sh 
+
+DOCKER_IMAGES="juliabox/juliaboxapi juliabox/juliaboxapi:34 juliabox/juliabox:34 juliabox/juliabox juliabox/engineapi juliabox/engineinteractive juliabox/enginedaemon juliabox/enginebase juliabox/webserver julialang/julia:v0.3.11"
+
+for dock_image in $DOCKER_IMAGES
+do
+    echo "Removing docker image $dock_image"
+    ## docker rmi $dock_image
+done
