@@ -5,6 +5,35 @@
 
 ### This script is meant to be used the first time around for clean installation
 
+
+### Perform pre-requisites check ...
+
+PRE_REQUISITE_APPS="docker supervisord supervisorctl"
+
+
+check_availability() {
+    command -v $1 > /dev/null 2>&1
+    ret_val=$?
+    ## echo "The ret_val is :: $ret_val"
+    return $ret_val
+}
+
+for req_app in $PRE_REQUISITE_APPS
+do
+    ## echo $req_app
+    check_availability $req_app
+    ret_val=$?
+    if [ $ret_val -eq 0 ]
+    then
+        echo "$req_app is installed, good to go !"
+    else
+        echo "$req_app is not installed. Please install $req_app first !"
+        echo "Installation terminated as dependencies are not met."
+        exit 1
+    fi
+done
+
+
 ## Untar up all the required images and components in the home folder
 tar xvf JuliaDeploymentBundle.tar
 
@@ -79,9 +108,9 @@ echo "======================================================"
 
 ## TODO make a curl call to echo server to test the API container deployment
 
-retVal=`curl -v --data ";jsonString=\"Hello\""  http://api.ip-10-93-140-37/test/echo/ | cat - | grep "Hello" | wc -l`
+ret_val=`curl -v --data ";jsonString=\"Hello\""  http://api.ip-10-93-140-37/test/echo/ | cat - | grep "Hello" | wc -l`
 
-echo "The retVal is :: $retVal"
+echo "The ret_val is :: $ret_val"
 
 echo "======================================================"
 if [$ret_val != 0]; then
