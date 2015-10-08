@@ -6,9 +6,28 @@
 ### This script is meant to be used the first time around for clean installation
 
 ### Perform pre-requisites check ...
+owner=`who -m | awk '{print $1;}'`
+## echo "The owner is $owner"
+grep "^$owner:" /etc/passwd | grep "1000:1000" > /dev/null 2>&1
+ret_val=$?
+if [ "$ret_val" -eq 0 ]; then
+    echo "Found the owner $owner with right UID and GID"
+else
+    echo "Did not find the owner $owner with right UID and GID"
+    exit 1
+fi
+
+id | grep root > /dev/null 2>&1
+ret_val=$?
+if [ "$ret_val" -ne 0 ]; then
+    echo "You are not running as sudo !!!"
+    exit 1
+else
+    echo "Running as root. Continuing !!!"
+fi
+
 
 PRE_REQUISITE_APPS="docker supervisord supervisorctl"
-
 
 check_availability() {
     command -v $1 > /dev/null 2>&1
@@ -32,8 +51,35 @@ do
     fi
 done
 
+add_host_to_etc_hosts() {
+    hostname=`hostname`
+    ## echo "The host name is ::: $hostname"
+    ip_address=`ping -c 1 $hostname | grep "bytes of data" | awk '{print $3}' | cut -c 2- | rev | cut -c 2- | rev`
+    ## echo "The ip address is $ip_address"
+    string_to_add="$ip_address $hostname  api.$hostname"
+    already_exists=`grep "^$string_to_add" /etc/hosts | wc -l`
 
-### TODO: check for sudo, user group in /etc/passwd, /etc/hosts config
+    ## Check if already exists
+    if [ $already_exists -ge 1 ]; then
+         return 999
+    fi
+    echo "String to add is :: $string_to_add"
+    echo "$string_to_add" >>  /etc/hosts
+    return $?
+}
+
+## echo "Calling add_host_to_etc_hosts()"
+add_host_to_etc_hosts
+ret_val=$?
+if [ $ret_val -eq 0 ]; then
+    echo "added to /etc/hosts !"
+elif [ $ret_val -eq 999 ]; then
+    echo "already configured in /etc/hosts !"
+else
+    echo "could not add to /etc/hosts !"
+    echo "Installation terminated as dependencies are not met."
+    exit 1
+fi
 
 ## Untar up all the required images and components in the home folder
 tar xvf JuliaDeploymentBundle.tar
