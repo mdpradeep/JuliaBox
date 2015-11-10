@@ -112,7 +112,8 @@ echo "======================================================"
 \cp -rf jboxengine /
 ret_val=$?
 ## TODO check if it is required to change ownership. It may not be required?
-chown -R $USER:$USER /jboxengine
+## chown -R $USER:$USER /jboxengine
+chown -R $owner:$owner /jboxengine
 echo "======================================================"
 echo "Unpacked jboxengine ..."
 echo "Status ${ret_val} ..."  ## Should exit if not successful !

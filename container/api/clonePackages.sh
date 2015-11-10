@@ -9,6 +9,7 @@ cp -rf /home/juser/MySQL*  /home/juser/.julia/v0.3/
 cp -rf /home/juser/test*  /home/juser/.julia/v0.3/
 cp -rf /home/juser/DBI*  /home/juser/.julia/v0.3/
 cp -rf /home/juser/Budget*  /home/juser/.julia/v0.3/
+cp -rf /home/juser/Lexicon*  /home/juser/.julia/v0.3/
 
 ## RUN rm -rf /home/juser/.julia/v0.3/JuliaWebAPI
 ## RUN /opt/julia_0.3.11/bin/julia -e "Pkg.rm(\"JuliaWebAPI\")" ## Need to do this to get dependencies !!!

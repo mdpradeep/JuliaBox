@@ -73,6 +73,9 @@ ADD Debug* /home/juser/Debug
 ADD Dates* /home/juser/Dates
 ## RUN cp -rf /home/juser/Dates*  /home/juser/.julia/v0.3/
 
+## New ...
+ADD Lexicon* /home/juser/Lexicon
+
 
 ADD libmysqlclient.so* /home/juser/
 ADD libodbc.so* /home/juser/
