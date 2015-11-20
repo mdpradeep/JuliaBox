@@ -155,7 +155,9 @@ echo "======================================================"
 echo "Validating API container ..."
 echo "======================================================"
 
-ret_val=`curl -v --data ";jsonString=\"Hello\""  http://api.ip-10-93-140-37/test/echo/ | cat - | grep "Hello" | wc -l`
+hostname=`hostname`
+ret_val=`curl -v --data ";jsonString=\"Hello\""  http://api.$hostname/test/echo/ | cat - | grep "Hello" | wc -l`
+## ret_val=`curl -v --data ";jsonString=\"Hello\""  http://api.ip-10-93-140-37/test/echo/ | cat - | grep "Hello" | wc -l`
 
 echo "The ret_val is :: $ret_val"
 
