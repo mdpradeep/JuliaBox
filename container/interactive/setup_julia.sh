@@ -2,6 +2,9 @@
 
 julia -e 'Pkg.init()'
 
+
+CUSTOM_LOCAL_PACKAGE_FOLDER=/opt/julia_packages_custom
+
 # Install packages for Julia stable
 DEFAULT_PACKAGES="IJulia" # Gadfly PyPlot SIUnits DataStructures HDF5 MAT \
 #Iterators NumericExtensions SymPy Interact Roots \
@@ -20,7 +23,8 @@ do
 done
 
 
-INTERNAL_PACKAGES="https://github.com/tanmaykm/JuliaBoxUtils.jl.git" # \
+INTERNAL_PACKAGES="https://github.com/tanmaykm/JuliaBoxUtils.jl.git"
+# \
 ## https://github.com/JuliaDB/DBI.jl.git \
 ## https://github.com/mdpradeep/JuliaWebAPI.jl.git \
 ## https://github.com/shashi/Homework.jl.git"
@@ -43,14 +47,15 @@ fi
 ## ls -l /opt/julia_packages_custom/
 
 
-LOCAL_PACKAGES="/opt/julia_packages_custom/DataFrames \
-/opt/julia_packages_custom/DBI \
-/opt/julia_packages_custom/Debug \
-/opt/julia_packages_custom/Match \
-/opt/julia_packages_custom/Dates \
-/opt/julia_packages_custom/ODBC \
-/opt/julia_packages_custom/JuliaWebAPI \
-/opt/julia_packages_custom/MySQL" # \
+LOCAL_PACKAGES="${CUSTOM_LOCAL_PACKAGE_FOLDER}/DataFrames \
+${CUSTOM_LOCAL_PACKAGE_FOLDER}/DBI \
+${CUSTOM_LOCAL_PACKAGE_FOLDER}/Debug \
+${CUSTOM_LOCAL_PACKAGE_FOLDER}/Match \
+${CUSTOM_LOCAL_PACKAGE_FOLDER}/Dates \
+${CUSTOM_LOCAL_PACKAGE_FOLDER}/ODBC \
+${CUSTOM_LOCAL_PACKAGE_FOLDER}/JuliaWebAPI \
+${CUSTOM_LOCAL_PACKAGE_FOLDER}/MySQL"
+# \
 ## /opt/julia_packages_custom/Budget"
 ## Already part of IJulia ... /opt/julia_packages_custom/Compat \
 

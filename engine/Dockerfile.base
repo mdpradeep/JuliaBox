@@ -47,10 +47,11 @@ RUN pip install tornado \
     boto \
     pycrypto \
     psutil \
-    cli53 \
     sh \
     pyzmq \
-    docker-py
+    docker-py  
+
+## MDP    cli53 \
 
 # Create docker group and juser which will run the engine.
 # Note: Assumption of docker gid=999 may not be true always. But this is better than a 777 permission on the docker socket.

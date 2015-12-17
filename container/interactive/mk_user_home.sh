@@ -11,10 +11,12 @@ JUSER_HOME=/tmp/juser
 PKG_DIR=/tmp/jpkg
 PKG_DIR_CUSTOM=/tmp/jpkg_custom
 
+### TODO: Move the packages to a better location than home !
+LOCAL_PACKAGE_FOLDER=/home/vagrant/JuliaBox/container/api
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 #SUDO_JUSER="sudo -u#1000 -g#1000"
-SUDO_JUSER=""
+SUDO_JUSER="sudo"
 
 function error_exit {
 	echo "$1" 1>&2
@@ -37,16 +39,15 @@ cp ${DIR}/mkjimg.jl ${JUSER_HOME}
 
 ### MDP 
 
-### TODO: Move the packages to a better location than home !
-LOCAL_PACKAGES="/home/vagrant/DataFrames \
-/home/vagrant/JuliaBox/container/api/Compat \
-/home/vagrant/JuliaBox/container/api/Debug \
-/home/vagrant/JuliaBox/container/api/DBI \
-/home/vagrant/JuliaBox/container/api/Dates \
-/home/vagrant/JuliaBox/container/api/ODBC \
-/home/vagrant/JuliaBox/container/api/Match \
-/home/vagrant/JuliaBox/container/api/JuliaWebAPI \
-/home/vagrant/JuliaBox/container/api/MySQL"
+LOCAL_PACKAGES="${LOCAL_PACKAGE_FOLDER}/DataFrames \
+${LOCAL_PACKAGE_FOLDER}/Compat \
+${LOCAL_PACKAGE_FOLDER}/Debug \
+${LOCAL_PACKAGE_FOLDER}/DBI \
+${LOCAL_PACKAGE_FOLDER}/Dates \
+${LOCAL_PACKAGE_FOLDER}/ODBC \
+${LOCAL_PACKAGE_FOLDER}/Match \
+${LOCAL_PACKAGE_FOLDER}/JuliaWebAPI \
+${LOCAL_PACKAGE_FOLDER}/MySQL"
 ## /home/vagrant/MySQL"
 ## /home/vagrant/JuliaBox/container/api/Budget"
 ## /home/vagrant/JustDial/Budget"
@@ -62,12 +63,14 @@ done
 
 sudo chown -R 1000:1000 ${JUSER_HOME}
 sudo chown -R 1000:1000 ${PKG_DIR}
+## MDP sudo chown -R juser:juser ${JUSER_HOME}
+## MDP sudo chown -R juser:juser ${PKG_DIR}
 docker run -i -v ${JUSER_HOME}:/home/juser -v ${PKG_DIR_CUSTOM}:/opt/julia_packages_custom -v ${PKG_DIR}:/opt/julia_packages -e "JULIA_PKGDIR=/opt/julia_packages/.julia" --entrypoint="/home/juser/setup_julia.sh" juliabox/juliabox:latest || error_exit "Could not run juliabox image"
 # MDP docker run -i -v ${JUSER_HOME}:/home/juser -v ${PKG_DIR}:/opt/julia_packages -e "JULIA_PKGDIR=/opt/julia_packages/.julia" --user=root --workdir=/home/juser --entrypoint="julia" juliabox/juliabox:latest mkjimg.jl || error_exit "Could not run juliabox image"
 
-retVal = $?
+## retVal = $?
 
-echo " =========================================== The ret val is ${retVal} ================================================= "
+## echo " =========================================== The ret val is ${retVal} ================================================= "
 
 ## precompilation fails mysteriously sometimes. retry a couple of times to rule out spurious errors
 #n=0
@@ -86,12 +89,19 @@ echo " =========================================== The ret val is ${retVal} ====
 
 sudo chown -R 1000:1000 ${JUSER_HOME}
 sudo chown -R 1000:1000 ${PKG_DIR}
+## MDP sudo chown -R juser:juser ${JUSER_HOME}
+## MDP sudo chown -R juser:juser ${PKG_DIR}
 
-sudo chown -R juser:juser ${JUSER_HOME}/logs ### MDP
+sudo mkdir -p ${JUSER_HOME}/logs ### MDP
+sudo chown -R 1000:1000 ${JUSER_HOME}/logs ### MDP
 sudo chmod -R 777 ${JUSER_HOME}/logs ### MDP
 
-${SUDO_JUSER} rm ${JUSER_HOME}/setup_julia.sh ${JUSER_HOME}/build_sysimg.jl ${JUSER_HOME}/jimg.jl ${JUSER_HOME}/mkjimg.jl
+## MDP ${SUDO_JUSER} rm ${JUSER_HOME}/setup_julia.sh ${JUSER_HOME}/build_sysimg.jl ${JUSER_HOME}/jimg.jl ${JUSER_HOME}/mkjimg.jl
+${SUDO_JUSER} rm ${JUSER_HOME}/setup_julia.sh ${JUSER_HOME}/jimg.jl ${JUSER_HOME}/mkjimg.jl
 
+## MDP
+${SUDO_JUSER} mkdir -p ${JUSER_HOME}/.ipython/profile_default/static/custom/
+## MDP
 ${SUDO_JUSER} cp ${DIR}/IJulia/ipython_notebook_config.py ${JUSER_HOME}/.ipython/profile_default/ipython_notebook_config.py
 ${SUDO_JUSER} cp ${DIR}/IJulia/custom.css ${JUSER_HOME}/.ipython/profile_default/static/custom/custom.css
 ${SUDO_JUSER} cp ${DIR}/IJulia/custom.js ${JUSER_HOME}/.ipython/profile_default/static/custom/custom.js

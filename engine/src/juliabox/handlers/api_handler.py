@@ -6,6 +6,7 @@ import struct
 
 from handler_base import JBoxHandler
 from juliabox.api import APIContainer, APIConnector
+from urlparse import urlparse
 
 
 class APIHandler(JBoxHandler):
@@ -20,18 +21,23 @@ class APIHandler(JBoxHandler):
         self.log_debug("called with uri: %s", uri)
 
         comps = filter(bool, uri.split('/'))
+        self.log_debug("comps is ::  %s", comps)
         if len(comps) < 2:
             self.send_error(status_code=404)
             return
-
         api_name = comps[0]
         cmd = comps[1]
         args = comps[2:]
-        ## MDP args = self.request.body
         vargs = self.request.arguments
 
+        ## parse_result=urlparse(comps[1])
+        ## self.log_debug("parse_result is ::  %s", parse_result)
+        ## cmd = parse_result.path
+
         self.log_debug("args is ::  %s", args)
+        self.log_debug("vargs is ::  %s", vargs)
         ## self.log_debug("data passed is ::: %s", self.request.body)
+        ## self.log_debug("arguments passed is ::: %s", self.request.arguments.values())
 
         self.log_debug("calling service:%s. cmd:%s. nargs: %d. nvargs: %d", api_name, cmd, len(args), len(vargs))
         APIContainer.ensure_container_available(api_name)

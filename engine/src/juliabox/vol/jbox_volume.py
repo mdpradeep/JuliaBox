@@ -289,18 +289,21 @@ class JBoxVol(LoggerMixin):
     def setup_julia_image(self, custom_jimg):
         # switch profile in kernel.json
         # this hack should not be required once we move completely to Julia 0.4
-        kernel_path = os.path.join(self.disk_path, ".ipython", "kernels", "julia-0.3", "kernel.json")
+        ## MDP kernel_path = os.path.join(self.disk_path, ".ipython", "kernels", "julia-0.3", "kernel.json")
+        kernel_path = os.path.join(self.disk_path, ".ipython", "kernels", "julia-0.4", "kernel.json")
         kernel_cfg = {
             "argv": ["/usr/bin/julia"],
-            "display_name": "Julia 0.3.11",
+            ## MDP "display_name": "Julia 0.3.11",
+            "display_name": "Julia 0.4.1",
             "language": "julia"
         }
 
         if custom_jimg is not None:
             kernel_cfg['argv'].extend(["-J", custom_jimg])
-        kernel_cfg['argv'].extend(["-i", "-F", "/opt/julia_packages/.julia/v0.3/IJulia/src/kernel.jl", "{connection_file}"])
-        with open(kernel_path, 'w') as kout:
-            kout.write(json.dumps(kernel_cfg, indent=4))
+        ## MDP kernel_cfg['argv'].extend(["-i", "-F", "/opt/julia_packages/.julia/v0.3/IJulia/src/kernel.jl", "{connection_file}"])
+        kernel_cfg['argv'].extend(["-i", "-F", "/opt/julia_packages/.julia/v0.4/IJulia/src/kernel.jl", "{connection_file}"])
+        ## MDP with open(kernel_path, 'w') as kout:
+            ## MDP kout.write(json.dumps(kernel_cfg, indent=4))
 
         # add/remove alias in .bashrc
         bashrc_path = os.path.join(self.disk_path, ".bashrc")
