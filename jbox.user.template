@@ -1,0 +1,17 @@
+{
+"numdisksmax": 3,
+"admin_users": ['pradeep@juliacomputing.com'],
+"websocket_protocol": "ws",
+"interactive": {
+    "numlocalmax": 2
+},
+"mnt_location" : "/jboxengine/data/disks/host",
+"backup_location" : None,
+"plugins": [
+    "juliabox.plugins.compute_singlenode",
+    "juliabox.plugins.vol_hostdisk",
+    "juliabox.plugins.vol_defpkg",
+    "juliabox.plugins.auth_zero",
+    "juliabox.plugins.db_sqlite3"
+]
+}
