@@ -59,7 +59,7 @@ class APIHandler(JBoxHandler):
             APIContainer.record_ping(msg['nid'])
         code = msg.get('code', 500)
         if 'data' in msg:
-            self.log_info("data received for %s", msg['data'])
+            self.log_debug("data received for %s", msg['data'])
         else:
             self.log_info("empty data received")
          
