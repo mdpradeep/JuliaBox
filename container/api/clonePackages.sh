@@ -31,5 +31,7 @@ export LD_LIBRARY_PATH=/home/juser:/usr/lib/x86_64-linux-gnu:/usr/lib
 ## echo $LD_LIBRARY_PATH
 ## cp /home/juser/*.so* /usr/lib/
 ## echo $?
+export OPEN_BLAS_NUM_THREADS=1
 
+mkdir -p /home/juser/logs && chown -R 1000:1000 /home/juser/logs && chmod -R 777 /home/juser/logs
 echo "Cloning done !!!"

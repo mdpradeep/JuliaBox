@@ -24,7 +24,8 @@ class APIContainer(BaseContainer):
     CPU_LIMIT = 1024
     MEM_LIMIT = None
     EXPIRE_SECS = 0
-    VOLUMES = ['/home/juser/logs']
+    ## MDP VOLUMES = ['/home/juser/logs']
+    VOLUMES = ['/home/juser', '/jboxengine/logs']
     # MDP HOST_LOG_FOLDER = '/jboxengine/logs/api'
     HOST_LOG_FOLDER = '/jboxengine/logs'
     MAX_CONTAINERS = 0

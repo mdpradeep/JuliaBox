@@ -90,11 +90,12 @@ ADD libodbc.so* /home/juser/
 ADD libltdl.so.7* /home/juser/
 ADD clonePackages.sh /home/juser/clonePackages.sh
 
+## RUN mkdir -p /home/juser/logs && chown 1000:1000 /home/juser/logs && chmod 777 /home/juser/logs
+
 RUN ./clonePackages.sh
 
-RUN mkdir -p /home/juser/logs && chown 1000:1000 /home/juser/logs && chmod 777 /home/juser/logs
-
-VOLUME /home/juser/logs
+## VOLUME /home/juser/logs
+VOLUME ./api/logs/
 
 ## MDP RUN cp /home/juser/libmysqlclient.so*  /usr/lib/
 
