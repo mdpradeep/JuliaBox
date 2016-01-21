@@ -134,6 +134,7 @@ Welcome to JuliaBox. We hope you will like it and also share with your friends.
         "juliabox.plugins.sendmail_ses",
         "juliabox.plugins.api_admin",
         "juliabox.plugins.user_admin",
+        "juliabox.plugins.bucket_gs",
         ""
     ],
 

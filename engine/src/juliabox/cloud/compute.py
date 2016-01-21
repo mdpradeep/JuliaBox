@@ -9,7 +9,7 @@ from juliabox.jbox_util import LoggerMixin, JBoxPluginType
 class JBPluginCloud(LoggerMixin):
     """ Interfaces with cloud service providers or provides similar services locally.
 
-    - `JBPluginCloud.JBP_BUCKETSTORE`, `JBPluginCloud.JBP_BUCKETSTORE_S3`:
+    - `JBPluginCloud.JBP_BUCKETSTORE`, `JBPluginCloud.JBP_BUCKETSTORE_S3`, `JBPluginCloud.JBP_BUCKETSTORE_GS`:
         Provides storage for blobs of data in named buckets. Similar to Amazon S3 or OpenStack Swift.
         - `push(bucket, local_file, metadata=None)`
         - `pull(bucket, local_file, metadata_only=False)`
@@ -52,6 +52,7 @@ class JBPluginCloud(LoggerMixin):
 
     JBP_BUCKETSTORE = "cloud.bucketstore"
     JBP_BUCKETSTORE_S3 = "cloud.bucketstore.s3"
+    JBP_BUCKETSTORE_GS = "cloud.bucketstore.gs"
 
     JBP_DNS = "cloud.dns"
     JBP_DNS_ROUTE53 = "cloud.dns.route53"
