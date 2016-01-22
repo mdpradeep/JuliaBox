@@ -81,6 +81,10 @@
 	    # EBS disk template snapshot id
 	    "ebs_template": None,
 
+	# For google cloud DNS
+	"project": "jc-test1",
+	"zone": "juliaenterprise"
+
     	"dummy" : "dummy"
     },
 
@@ -134,6 +138,7 @@ Welcome to JuliaBox. We hope you will like it and also share with your friends.
         "juliabox.plugins.sendmail_ses",
         "juliabox.plugins.api_admin",
         "juliabox.plugins.user_admin",
+	"juliabox.plugins.dns_gcloud",
         ""
     ],
 
