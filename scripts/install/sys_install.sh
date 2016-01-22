@@ -20,6 +20,7 @@ function sysinstall_pystuff {
     sudo pip install sh
     sudo pip install pyzmq
     sudo pip install docker-py
+    sudo pip install oauth2client
 }
 
 function sysinstall_libs {
